@@ -1,0 +1,16 @@
+{
+    "name": "tinmyowin/phpmvcframework",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tin Myo Win"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
