@@ -12,6 +12,7 @@ class Application
   public $response;
   public $controller;
   public $db;
+  public $session;
 
   public static $ROOT_DIR;
   public static $app;
@@ -24,6 +25,7 @@ class Application
     $this->controller = new Controller();
     $this->router = new Router($this->request, $this->response);
     $this->db = new Database($config['db']);
+    $this->session = new Session();
   }
 
   public function run() {
