@@ -2,9 +2,9 @@
 
 namespace app\models;
 
-use app\core\DbModel;
+use app\core\UserModel;
 
-class User extends DbModel
+class User extends UserModel
 {
   const STATUS_INACTIVE = 0;
   const STATUS_ACTIVE = 1;
@@ -40,8 +40,30 @@ class User extends DbModel
     return 'users';
   }
 
+  public function primaryKey(): string
+  {
+    return 'id';
+  }
+
   public function attributes(): array
   {
     return ['firstname', 'lastname', 'email', 'password', 'status'];
+  }
+
+  public function labels(): array
+  {
+    return [
+      'firstname' => 'First name',
+      'lastname' => 'Last name',
+      'email' => 'Email',
+      'password' => 'Password',
+      'status' => 'Status',
+      'passwordConfirm' => 'Password Confirm'
+    ];
+  }
+
+  public function getDisplayName(): string
+  {
+    return $this->firstname . " " . $this->lastname;
   }
 }

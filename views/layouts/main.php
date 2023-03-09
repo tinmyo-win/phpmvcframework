@@ -1,6 +1,7 @@
 <?php
 
 use app\core\Application;
+
 ?>
 
 <!doctype html>
@@ -28,17 +29,26 @@ use app\core\Application;
           <li class="nav-item">
             <a class="nav-link" href="contact">Contact</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="register">Register</a>
-          </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <?php if (Application::isGuest()) : ?>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="register">Register</a>
+            </li>
+          </ul>
+        <?php else : ?>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="logout">
+                Welcome <?php echo Application::$app->user->getDisplayName() ?>
+                (logout)
+              </a>
+            </li>
+          </ul>
+        <?php endif; ?>
       </div>
     </div>
   </nav>
