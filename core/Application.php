@@ -19,6 +19,7 @@ class Application
   public static $ROOT_DIR;
   public static $app;
   public $user;
+  public $view;
 
   public function __construct($rootPath, array $config) {
     self::$ROOT_DIR = $rootPath;
@@ -27,9 +28,11 @@ class Application
     $this->response = new Response();
     $this->controller = new Controller();
     $this->router = new Router($this->request, $this->response);
+
     $this->db = new Database($config['db']);
     $this->session = new Session();
     $this->userClass = $config['userClass'];
+    $this->view = new View();
 
     $primaryValue = $this->session->get('user');
     if($primaryValue) {
@@ -38,7 +41,7 @@ class Application
     }
   }
 
-  public function isGuest() {
+  public static function isGuest() {
     return !self::$app->user;
   }
 
@@ -47,7 +50,7 @@ class Application
       echo $this->router->resolve();
     } catch (Exception $e) {
       $this->response->setStatusCode($e->getCode());
-      echo $this->router->renderView('_error', [
+      echo $this->view->renderView('_error', [
         'exception' => $e,
       ]);
     }
