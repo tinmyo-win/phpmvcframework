@@ -4,7 +4,7 @@ namespace app\core\form;
 
 use app\models\Model;
 
-class Field
+class Field extends BaseField
 {
   public $model;
   public $attribute;
@@ -16,32 +16,23 @@ class Field
 
   public function __construct(Model $model, $attribute)
   {
-    $this->model = $model;
-    $this->attribute = $attribute;
     $this->type = self::TYPE_TEXT;
-  }
-
-  public function __toString()
-  {
-    return sprintf('
-      <div class="mb-3">
-        <label class="form-label">%s</label>
-        <input type="%s" name="%s" value="%s" class="form-control %s">
-        <div class="invalid-feedback">
-          %s
-        </div>
-      </div>
-    ', $this->model->getLabel($this->attribute),
-        $this->type,
-        $this->attribute,
-        $this->model->{$this->attribute},
-        $this->model->hasError($this->attribute) ? 'is-invalid' : '',
-        $this->model->getFirstError($this->attribute)
-      );
+    parent::__construct($model, $attribute);
   }
 
   public function passwordField() {
     $this->type = self::TYPE_PASSWORD;
     return $this;
+  }
+
+  public function renderInput(): string
+  {
+
+    return sprintf('<input type="%s" name="%s" value="%s" class="form-control %s">',
+      $this->type,
+      $this->attribute,
+      $this->model->{$this->attribute},
+      $this->model->hasError($this->attribute) ? 'is-invalid' : '',
+  );
   }
 }
