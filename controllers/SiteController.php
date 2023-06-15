@@ -3,16 +3,20 @@
 namespace app\controllers;
 
 use app\core\Application;
+use app\core\middlewares\AuthMiddleware;
 use app\models\ContactForm;
 use app\core\Request;
 use app\core\Response;
 
 class SiteController extends Controller
 {
+  public function __construct()
+  {
+    $this->registerMiddleware(new AuthMiddleware(['home']));
+  }
   public function home() {
-
     $params = [
-      'name' => 'Heisenberg',
+      'name' => 'Home Page',
     ];
 
     return $this->render('home', $params);
